@@ -1,6 +1,5 @@
 const db = require('../config/db');
 
-// Obtener todos los empleados
 exports.obtenerEmpleados = async (req, res) => {
   try {
     const [rows] = await db.query('SELECT * FROM EMPLEADOS');
@@ -11,7 +10,6 @@ exports.obtenerEmpleados = async (req, res) => {
   }
 };
 
-// Crear empleado
 exports.crearEmpleado = async (req, res) => {
   try {
     const { nombre, apellido, fecha_ingreso, salario_mensual, puesto, usuario_id } = req.body;
@@ -45,7 +43,6 @@ exports.crearEmpleado = async (req, res) => {
   }
 };
 
-// Actualizar empleado
 exports.actualizarEmpleado = async (req, res) => {
   try {
     const { id } = req.params;
@@ -66,7 +63,6 @@ exports.actualizarEmpleado = async (req, res) => {
   }
 };
 
-// Eliminar empleado
 exports.eliminarEmpleado = async (req, res) => {
   try {
     const { id } = req.params;

@@ -4,17 +4,15 @@ const jwt = require('jsonwebtoken');
 
 exports.login = async (req, res) => {
   try {
-    // 🔍 Ver qué datos llegan desde el frontend/Postman
     console.log('BODY RECIBIDO:', req.body);
 
     const { email, password } = req.body;
 
-    // Validación básica
+    //Validacion
     if (!email || !password) {
       return res.status(400).json({ mensaje: 'Email y contraseña son obligatorios' });
     }
 
-    // Buscar usuario en la base de datos
     const [rows] = await db.query(
       'SELECT * FROM USUARIOS WHERE email = ?',
       [email]
@@ -28,10 +26,10 @@ exports.login = async (req, res) => {
 
     const usuario = rows[0];
 
-    // 🔍 Ver usuario encontrado
+    // Usuario
     console.log('USUARIO BD:', usuario);
 
-    // Comparar contraseña ingresada con hash guardado
+    // Contrase;a 
     const passwordValido = await bcrypt.compare(password, usuario.password);
 
     console.log('PASSWORD VALIDO:', passwordValido);
@@ -40,7 +38,7 @@ exports.login = async (req, res) => {
       return res.status(401).json({ mensaje: 'Credenciales incorrectas' });
     }
 
-    // Generar token JWT
+    // Token
     const token = jwt.sign(
       { id: usuario.id, rol: usuario.rol },
       process.env.JWT_SECRET,
